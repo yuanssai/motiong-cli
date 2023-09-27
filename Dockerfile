@@ -1,5 +1,8 @@
 FROM golang:1.21.1 as builder
 
+ARG TARGETOS
+ARG TARGETARCH
+
 WORKDIR /workspace
 
 COPY go.mod go.mod
@@ -9,7 +12,7 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -o /go/bin/motiong-cli ./cmd/
+RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH} go build -a -o /go/bin/motiong-cli ./cmd/motiong-cli
 
 RUN chmod +x /go/bin/motiong-cli
 

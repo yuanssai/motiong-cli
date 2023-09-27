@@ -19,9 +19,12 @@ jobs:
       - name: Generate version
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
       - name: Build and Push
         uses: docker/build-push-action@v4
         with:
+          context: .
           push: true
           tags: 'motiongregistry.azurecr.io/motiong-cli:${{ steps.vars.outputs.sha_short }}'
       - name: Show Version
