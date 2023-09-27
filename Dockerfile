@@ -11,6 +11,8 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -o /go/bin/motiong-cli ./cmd/
 
+RUN chmod +x /go/bin/motiong-cli
+
 FROM alpine
 
 COPY --from=builder /go/bin/motiong-cli /usr/local/bin/motiong-cli
