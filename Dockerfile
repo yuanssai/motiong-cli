@@ -12,7 +12,7 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH} go build -a -o /go/bin/motiong-cli ./cmd/motiong-cli
+RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH} go build -a -o /go/bin/motiong-cli ./cmd/
 
 RUN chmod +x /go/bin/motiong-cli
 
