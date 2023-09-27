@@ -16,6 +16,8 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -a -o /go/bin/motiong-cli ./cmd/
 
+RUN chmod +x /go/bin/motiong-cli
+
 FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine
 
 COPY --from=builder /go/bin/motiong-cli /usr/local/bin/motiong-cli
