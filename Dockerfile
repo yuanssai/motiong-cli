@@ -18,6 +18,8 @@ RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-w -s
 
 FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine
 
-COPY --from=builder /app/motiong-cli motiong-cli
+WORKDIR /app/
 
-ENTRYPOINT ["motiong-cli"]
+COPY --from=builder /app/motiong-cli /app/motiong-cli
+
+ENTRYPOINT ["/app/motiong-cli"]
