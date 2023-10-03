@@ -16,18 +16,18 @@ jobs:
           login-server: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.AZURE_REGISTRY_USERNAME }}
           password: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
-      - name: Generate version
+      - name: Generate New Version
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      - name: Set up Docker Buildx
+      - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Build and Push
+      - name: Build & Push Docker Image to ACR
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: 'motiongregistry.azurecr.io/motiong-cli:${{ steps.vars.outputs.sha_short }}'
-      - name: Show Version
+      - name: Show New Version Summary
         run: |
           SUMMARY=$'# Show Version Summary\n${{ steps.vars.outputs.sha_short }}'
           echo "$SUMMARY" >> $GITHUB_STEP_SUMMARY
